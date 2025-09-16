@@ -1,4 +1,4 @@
-
+local S = core.get_translator("elevator")
 local phash = elevator.phash
 local get_node = elevator.get_node
 
@@ -92,9 +92,9 @@ if minetest.global_exists("screwdriver") then
 end
 
 minetest.register_node("elevator:shaft", {
-    description = "Elevator Shaft",
-    _doc_items_longdesc = "An elevator shaft that connects elevators to other elevators and motors.",
-    _doc_items_usagehelp = "Building a vertical stack of elevators and shafts with an elevator motor on top allows vertical transportation.",
+    description = S("Elevator Shaft"),
+    _doc_items_longdesc = S("An elevator shaft that connects elevators to other elevators and motors."),
+    _doc_items_usagehelp = S("Building a vertical stack of elevators and shafts with an elevator motor on top allows vertical transportation."),
     tiles = { moditems.el_shaft_gfx },
     overlay_tiles = { moditems.el_shaft_o_gfx },
     drawtype = "nodebox",
@@ -139,9 +139,9 @@ minetest.register_node("elevator:shaft", {
   })
 
 minetest.register_node("elevator:motor", {
-    description = "Elevator Motor",
-    _doc_items_longdesc = "The engine powering an elevator shaft. Placed at the top.",
-    _doc_items_usagehelp = "Place the motor on the top of a stack of elevators and elevator shafts. The elevators will activate and you can then use them.",
+    description = S("Elevator Motor"),
+    _doc_items_longdesc = S("The engine powering an elevator shaft. Placed at the top."),
+    _doc_items_usagehelp = S("Place the motor on the top of a stack of elevators and elevator shafts. The elevators will activate and you can then use them."),
     tiles = {
         moditems.steel_block_image,
         moditems.steel_block_image,
@@ -195,7 +195,7 @@ local box_box = {
 
 -- Elevator box node. Not intended to be placeable.
 minetest.register_node("elevator:elevator_box", {
-    description = "Elevator",
+    description = S("Elevator"),
     drawtype = "nodebox",
     paramtype = 'light',
     paramtype2 = "facedir",
@@ -274,7 +274,7 @@ for _,mode in ipairs({"on", "off"}) do
         cbox = box
     end
     minetest.register_node(nodename, {
-        description = "Elevator",
+        description = S("Elevator level"),
         drawtype = "nodebox",
         sunlight_propagates = false,
         paramtype = "light",
@@ -283,8 +283,8 @@ for _,mode in ipairs({"on", "off"}) do
         on_rotate = moditems.on_rotate_disallow,
         climbable = true,
 
-        _doc_items_longdesc = on and "An active elevator, ready for transporting." or "An inactive elevator, not connected to a motor.",
-        _doc_items_usagehelp = on and "Step inside this elevator and use it (right-click) to be transported to any other elevator along the shaft." or "This elevator is inactive; it is disconnected from a motor. It may be extended with shafts and other elevators in a vertical line with an elevator motor on top to power the whole shaft and enable transport.",
+        _doc_items_longdesc = on and S("An active elevator, ready for transporting.") or S("An inactive elevator, not connected to a motor."),
+        _doc_items_usagehelp = on and S("Step inside this elevator and use it (right-click) to be transported to any other elevator along the shaft.") or S("This elevator is inactive; it is disconnected from a motor. It may be extended with shafts and other elevators in a vertical line with an elevator motor on top to power the whole shaft and enable transport."),
 
         selection_box = {
                 type = "fixed",
@@ -387,7 +387,7 @@ for _,mode in ipairs({"on", "off"}) do
             local motorhash = meta:get_string("motor")
             if on and elevator.motors[motorhash] then
                 if vector.distance(sender:get_pos(), pos) > 1 or minetest.get_node(sender:get_pos()).name ~= nodename then
-                    minetest.chat_send_player(sender:get_player_name(), "You are not inside the booth.")
+                    minetest.chat_send_player(sender:get_player_name(), S("You are not inside the booth."))
                     return
                 end
                 -- Build the formspec from the motor table.
