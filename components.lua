@@ -49,15 +49,21 @@ if mineclone_path then
   moditems.el_box_gfx = "elevator_box_mcl.png"
   moditems.steel_block_image = "default_steel_block.png"
 elseif default_path then
-  moditems.el_shaft_groups = {cracky=2,oddly_breakable_by_hand=0} -- removing ability to destroy by hand to prevent accidental breakage of whole elevators
-  moditems.el_motor_groups = {cracky=1}
-  moditems.elevator_groups = {cracky=1,choppy=1,snappy=1}
+  moditems.el_shaft_groups = {cracky=2,oddly_breakable_by_hand=3} -- removing ability to destroy by hand to prevent accidental breakage of whole elevators
+  moditems.el_motor_groups = {cracky=1,oddly_breakable_by_hand=3}
+  moditems.elevator_groups = {cracky=1,choppy=1,snappy=1,oddly_breakable_by_hand=3}
   moditems.elevator_special_groups = {not_in_creative_inventory=1}
   moditems.sounds_stone = default.node_sound_stone_defaults
-  moditems.el_motor_gfx = "elevator_motor.png"
-  moditems.el_shaft_gfx = "elevator_shaft.png"
-  moditems.el_box_gfx = "elevator_box.png"
-  moditems.steel_block_image = "default_steel_block.png"
+  moditems.el_motor_gfx = {name="elevator_motor.png",color="white"}
+  moditems.el_shaft_gfx = {name="elevator_shaft.png",color="white"}
+  moditems.el_box_gfx = {name="elevator_box.png",color="white"}
+  moditems.el_motor_o_gfx = "elevator_motor_o.png"
+  moditems.el_shaft_o_gfx = "elevator_shaft_o.png"
+  moditems.el_box_o_gfx = "elevator_shaft_o.png"
+  moditems.el_box_tr_gfx = "elevator_tr.png"
+  moditems.el_motor_tr_gfx = moditems.el_box_tr_gfx
+  moditems.steel_block_image_old = "default_steel_block.png"
+  moditems.steel_block_image = {name="default_steel_block.png",color="white"}
 elseif aurum_path then
     moditems.el_shaft_groups = {dig_pick = 2}
     moditems.el_motor_groups = {dig_pick = 1}
@@ -90,9 +96,12 @@ minetest.register_node("elevator:shaft", {
     _doc_items_longdesc = "An elevator shaft that connects elevators to other elevators and motors.",
     _doc_items_usagehelp = "Building a vertical stack of elevators and shafts with an elevator motor on top allows vertical transportation.",
     tiles = { moditems.el_shaft_gfx },
+    overlay_tiles = { moditems.el_shaft_o_gfx },
     drawtype = "nodebox",
     use_texture_alpha = "clip",
     paramtype = "light",
+    paramtype2 = "color4dir",
+	palette = "elevator_palette.png",
     on_rotate = moditems.on_rotate_disallow,
     sunlight_propagates = true,
     groups = moditems.el_shaft_groups,
@@ -141,6 +150,16 @@ minetest.register_node("elevator:motor", {
         moditems.el_motor_gfx,
         moditems.el_motor_gfx,
     },
+    overlay_tiles = {
+        moditems.el_motor_tr_gfx,
+        moditems.el_motor_tr_gfx,
+        moditems.el_motor_o_gfx,
+        moditems.el_motor_o_gfx,
+        moditems.el_motor_o_gfx,
+        moditems.el_motor_o_gfx,
+    },
+    paramtype2 = "color4dir",
+	palette = "elevator_palette.png",
     groups = moditems.el_motor_groups,
     is_ground_content = false,
     sounds = moditems.sounds_stone(),
@@ -205,6 +224,14 @@ minetest.register_node("elevator:elevator_box", {
             moditems.el_box_gfx,
             moditems.el_box_gfx,
     },
+    overlay_tiles = {
+            moditems.el_motor_tr_gfx,
+            moditems.el_motor_tr_gfx,
+            moditems.el_box_o_gfx,
+            moditems.el_box_o_gfx,
+            moditems.el_box_o_gfx,
+            moditems.el_box_o_gfx,
+    },
     groups = moditems.elevator_special_groups,
     is_ground_content = false,
     use_texture_alpha = "clip",
@@ -251,7 +278,8 @@ for _,mode in ipairs({"on", "off"}) do
         drawtype = "nodebox",
         sunlight_propagates = false,
         paramtype = "light",
-        paramtype2 = "facedir",
+		paramtype2 = "color4dir",
+		palette = "elevator_palette.png",
         on_rotate = moditems.on_rotate_disallow,
         climbable = true,
 
@@ -288,6 +316,21 @@ for _,mode in ipairs({"on", "off"}) do
                 moditems.el_box_gfx,
                 moditems.el_box_gfx,
         },
+        overlay_tiles = on and {
+                moditems.el_box_tr_gfx,
+                moditems.el_box_tr_gfx,
+                moditems.el_box_o_gfx,
+                moditems.el_box_o_gfx,
+                moditems.el_box_o_gfx,
+                moditems.el_box_o_gfx,
+        } or {
+                moditems.el_box_o_gfx,
+                moditems.el_box_o_gfx,
+                moditems.el_box_o_gfx,
+                moditems.el_box_o_gfx,
+                moditems.el_box_o_gfx,
+                moditems.el_box_o_gfx,
+        },
         use_texture_alpha = "clip",
 
         groups = groups,
@@ -304,7 +347,7 @@ for _,mode in ipairs({"on", "off"}) do
             -- Add a placeholder to avoid nodes being placed in the top.
             local p = vector.add(pos, {x=0, y=1, z=0})
             local p2 = minetest.dir_to_facedir(placer:get_look_dir())
-            minetest.set_node(p, {name="elevator:placeholder", paramtype2="facedir", param2=p2})
+            minetest.set_node(p, {name="elevator:placeholder", paramtype2="color4dir", param2=p2})
 
             -- Try to build a motor above.
             local motor = elevator.locate_motor(pos)
@@ -421,3 +464,4 @@ end
 
 -- Compatability with an older version.
 minetest.register_alias("elevator:elevator", "elevator:elevator_off")
+
