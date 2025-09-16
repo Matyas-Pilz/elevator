@@ -21,7 +21,9 @@ included with MCL2 game, original copyright:
 
 The textures are taken from the Minecraft resource pack “Faithful 1.11” by 
 Vattic and xMrVizzy and contributers."
+Some texture edits by MatyasP.
 
 Elevator motor design is (c) minertestdude, redistributed under MIT license.
 
 elevator_steel_block.png CC BY-SA 3.0 (https://github.com/minetest/minetest_game)
+Color palette by MatyasP, CC0 1.0
