@@ -198,7 +198,8 @@ minetest.register_node("elevator:elevator_box", {
     description = S("Elevator"),
     drawtype = "nodebox",
     paramtype = 'light',
-    paramtype2 = "facedir",
+    paramtype2 = "color4dir",
+	palette = "elevator_palette.png",
     wield_scale = {x=0.6, y=0.6, z=0.6},
 
     selection_box = {
