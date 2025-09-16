@@ -1,0 +1,15 @@
+# textdomain: elevator
+Elevator Shaft=Výtahová šachta
+An elevator shaft that connects elevators to other elevators and motors.=Výtahová šachta, která spojuje jednotlivá patra výtahu.
+Building a vertical stack of elevators and shafts with an elevator motor on top allows vertical transportation.=Množství pater výtahu a šachet mezi nimi umožňuje svislou přepravu mezi patry.
+Elevator Motor=Motor výtahu
+The engine powering an elevator shaft. Placed at the top.=Motor pohání celý výtah. Umisťuje se úplně nahoru.
+Place the motor on the top of a stack of elevators and elevator shafts. The elevators will activate and you can then use them.=Po umístění na postavený výtah (z pater a šachet) se aktivuje a lze jej používat.
+Elevator=Výtah
+Elevator level=Patro výtahu
+This elevator is inactive; it is disconnected from a motor. It may be extended with shafts and other elevators in a vertical line with an elevator motor on top to power the whole shaft and enable transport.=Výtah je neaktivní; není spojen s motorem. Může být prodloužen šachtami a dalšími patry výtahu ve svislé linii s motorem výtahu nahoře, který pohání celou šachtu s patry a umožňuje přepravu.
+Step inside this elevator and use it (right-click) to be transported to any other elevator along the shaft.=Vstupte do tohoto výtahu a použijte ho (klikněte pravým tlačítkem myši) k přepravě do jakéhokoli jiného patra (v rámci sloupce).
+An inactive elevator, not connected to a motor.=Neaktivní výtah, nespojený s motorem.
+An active elevator, ready for transporting.=Aktivní výtah, připravený k přepravě.
+You are not inside the booth.=Nejsi uvnitř kabiny výtahu.
+
